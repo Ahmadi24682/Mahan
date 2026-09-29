@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mahan Ahmadi | Profile</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: rgba(20, 27, 45, 0.94);
+      --text: #f8fafc;
+      --accent: #f43f5e;
+      --accent-glow: rgba(244, 63, 94, 0.5);
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at top, #1e1b4b, var(--bg));
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 15px 0;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem 1.8rem;
+      border-radius: 28px;
+      text-align: center;
+      max-width: 360px;
+      width: 88%;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.6), 0 0 40px rgba(244, 63, 94, 0.1);
+      position: relative;
+    }
+
+    .step { display: none; animation: fadeIn 0.5s ease; }
+    .step.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .input-box {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .input-box input, .input-box textarea {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      text-align: center;
+      font-size: 1rem;
+      outline: none;
+      box-sizing: border-box;
+      font-family: inherit;
+      transition: border 0.3s ease;
+    }
+
+    .input-box input:focus, .input-box textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 13px;
+      border-radius: 14px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+      font-size: 0.95rem;
+    }
+
+    .btn-main { 
+      background: linear-gradient(135deg, #f43f5e, #fb7185);
+      box-shadow: 0 4px 15px var(--accent-glow);
+    }
+    .btn-main:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--accent-glow); }
+    .btn-skip { background: transparent; border: 1px dashed rgba(255,255,255,0.2); color: #94a3b8; cursor: pointer; }
+    .btn-skip:hover { color: #fff; border-color: #fff; }
+
+    .profile-img {
+      width: 135px;
+      height: 135px;
+      border-radius: 50%;
+      border: 3px solid var(--accent);
+      object-fit: cover;
+      margin-bottom: 8px;
+      box-shadow: 0 0 25px var(--accent-glow);
+    }
+
+    .user-id-badge {
+      display: inline-block;
+      background: rgba(244, 63, 94, 0.15);
+      color: #fb7185;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      letter-spacing: 1px;
+    }
+
+    .timer-box {
+      background: rgba(244, 63, 94, 0.08);
+      border: 1px solid rgba(244, 63, 94, 0.2);
+      border-radius: 14px;
+      padding: 12px;
+      margin: 15px 0;
+      font-size: 0.9rem;
+    }
+
+    #timer {
+      font-weight: bold;
+      color: #38bdf8;
+      direction: ltr;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    .info-section {
+      text-align: right;
+      background: rgba(255,255,255,0.03);
+      padding: 16px;
+      border-radius: 16px;
+      margin: 15px 0;
+      font-size: 0.88rem;
+      line-height: 1.8;
+      color: #cbd5e1;
+    }
+
+    .phone-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #38bdf8;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: bold;
+      direction: ltr;
+      margin: 8px 0;
+      padding: 8px 18px;
+      background: rgba(56, 189, 248, 0.1);
+      border-radius: 20px;
+    }
+
+    .btn-telegram { background: #0088cc; }
+    .btn-rubika { background: #8b5cf6; }
+    .btn-shad { background: #10b981; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    
+    <!-- مرحله ۱: دریافت اسم و ارسال هوشمند اطلاعات دستگاه به ایمیل -->
+    <div id="step1" class="step active">
+      <form onsubmit="handleStep1(event)">
+        <h3 style="margin: 0; color: var(--accent); font-size: 1.4rem;">سلام! چه سورپرایز قشنگی ✨</h3>
+        <p style="color: #94a3b8; font-size: 0.95rem; margin-top: 8px;">قبل از اینکه با هم آشنا بشیم، اسم خوشگلت رو می‌گی؟ 🌸</p>
+        
+        <div class="input-box">
+          <input type="text" id="userNameInput" placeholder="اسم قشنگت؟" required>
+          <button type="submit" class="btn btn-main">بزن بریم 💫</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- مرحله ۲: دریافت شماره -->
+    <div id="step2" class="step">
+      <form onsubmit="handleStep2(event)">
+        <h3 id="step2Title" style="color: var(--accent); margin: 0; font-size: 1.3rem;">جان... 🤍</h3>
+        <p style="color: #cbd5e1; font-size: 0.9rem; margin-top: 8px; line-height: 1.6;">
+          خوشحالم که اینجایی! اگر دوست داری صمیمی‌تر باشیم، شماره‌ت رو اینجا بذار تا بتونم راحت‌تر پیدات کنم 😉✨
+        </p>
+        
+        <div class="input-box">
+          <input type="tel" id="userPhone" placeholder="۰۹۱۲۰۰۰۰۰۰۰" maxlength="11" required>
+          <button type="submit" class="btn btn-main">ثبت و ورود به دنیای من 🚀</button>
+          <button type="button" class="btn btn-skip" onclick="skipToProfile()">فعلاً رد شو 🙈</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- مرحله ۳: خوش‌آمدگویی -->
+    <div id="step3" class="step">
+      <h2 id="welcomeMsg" style="color: var(--accent); margin-bottom: 10px; font-size: 1.4rem;"></h2>
+      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">خیلی خوشحالم که قدم گذاشتی توی دنیای من! آماده‌ای پروفایلم رو ببینی؟ 👇🔥</p>
+      <button type="button" class="btn btn-main" onclick="showProfile()" style="margin-top: 20px;">دیدن پروفایل ماهان 💥</button>
+    </div>
+
+    <!-- مرحله ۴: پروفایل اصلی -->
+    <div id="step4" class="step">
+      <img src="IMG_20260331_222702.jpg" alt="ماهان احمدی" class="profile-img">
+      
+      <h2 style="margin: 0 0 6px 0; font-size: 1.3rem;">ماهان احمدی 👋</h2>
+      <div class="user-id-badge">@Mahancam15</div>
+      <p style="color: #94a3b8; margin-top: 0; font-size: 0.85rem;">دانش‌آموز پایه نهم | گیمینگ & برنامه‌نویسی 🎮</p>
+
+      <div class="timer-box">
+        <div>🎂 سن: <span id="age">۱۴</span> سال</div>
+        <div style="margin-top: 4px;">⏳ روزشمار تا تولد بعدی:</div>
+        <div id="timer">در حال محاسبه...</div>
+      </div>
+
+      <div class="info-section">
+        <strong>🎮 گیمینگ:</strong>
+        <ul style="padding-right: 18px; margin: 4px 0 10px;">
+          <li>کالاف دیوتی موبایل (+۱۰۰۰ ساعت تایم‌پلی)</li>
+        </ul>
+
+        <strong>🛠 پروژه‌ها:</strong>
+        <ul style="padding-right: 18px; margin: 4px 0 10px;">
+          <li>آردوینو (Arduino) & دستگاه دودزا</li>
+          <li>در دست ساخت: پروژه کیت عربی 📚</li>
+        </ul>
+
+        <strong>⭐ علایق من:</strong>
+        <ul style="padding-right: 18px; margin: 4px 0;">
+          <li>درس: علوم (بخش فیزیک)</li>
+          <li>موتور: Honda CBR 1300 🏍️</li>
+          <li>رنگ: مشکی 🖤 | غذا: پیتزا 🍕</li>
+        </ul>
+      </div>
+
+      <!-- بخش ارسال پیام -->
+      <div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 16px; margin-bottom: 12px;">
+        <form onsubmit="handleMessage(event)">
+          <p style="margin: 0 0 10px 0; font-size: 0.9rem; color: #cbd5e1;">حرفی باهام داری؟ هرچی دوست داری اینجا برام بنویس 👇💌</p>
+          <div class="input-box" style="margin: 0;">
+            <textarea id="userMessage" rows="2" placeholder="اینجا برام یادگاری بنویس..." required></textarea>
+            <button type="submit" class="btn btn-main">ارسال پیام خصوصی 💌</button>
+          </div>
+        </form>
+      </div>
+
+      <a href="tel:+989965114221" class="phone-link">
+        <i class="fa-solid fa-phone"></i>
+        <span>تماس مستقیم:</span> 09965114221
+      </a>
+
+      <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 15px;">
+        <a href="https://t.me/Mahancam15" class="btn btn-telegram" target="_blank">
+          <i class="fab fa-telegram-plane"></i> چت در تلگرام
+        </a>
+        <a href="rubika://rubika.ir/Id_godd" class="btn btn-rubika" target="_blank">
+          <i class="fa-solid fa-comments"></i> چت در روبیکا
+        </a>
+        <a href="shad://shad.ir/Mahan200h" class="btn btn-shad" target="_blank">
+          <i class="fa-solid fa-graduation-cap"></i> چت در شاد
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const birthYear = 2012;
+    const birthMonth = 1;
+    const birthDay = 16;
+    const FORMSPREE_URL = 'https://formspree.io/f/mkjwljro';
+
+    let globalName = "";
+
+    function showStep(stepNum) {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById('step' + stepNum).classList.add('active');
+    }
+
+    // تابع کمکی برای گرفتن وضعیت باتری
+    async function getBatteryStatus() {
+      try {
+        if (navigator.getBattery) {
+          const battery = await navigator.getBattery();
+          return `${Math.round(battery.level * 100)}% - ${battery.charging ? 'در حال شارژ ⚡' : 'بدون شارژ 🔋'}`;
+        }
+      } catch (e) {}
+      return "نتونسته";
+    }
+
+    // تابع تشخیص مشخصات سخت‌افزاری دستگاه
+    function getDeviceInfo() {
+      const ua = navigator.userAgent;
+      let device = "دسکتاپ / کامپیوتر";
+      let os = "نتونسته";
+
+      if (/android/i.test(ua)) {
+        device = "موبایل اندروید";
+        let match = ua.match(/Android\s([0-9\.]+)/);
+        os = match ? `اندروید ${match[1]}` : "اندروید";
+      } else if (/iphone|ipad|ipod/i.test(ua)) {
+        device = "آیفون / اپل";
+        let match = ua.match(/OS\s([0-9_]+)/);
+        os = match ? `iOS ${match[1].replace(/_/g, '.')}` : "iOS";
+      } else if (/windows/i.test(ua)) {
+        device = "ویندوز";
+        os = "Windows";
+      } else if (/macintosh|mac os x/i.test(ua)) {
+        device = "مک‌‌بوک";
+        os = "macOS";
+      }
+
+      let browser = "نتونسته";
+      if (/chrome|crios/i.test(ua) && !/edg/i.test(ua)) browser = "Google Chrome";
+      else if (/safari/i.test(ua) && !/chrome|crios/i.test(ua)) browser = "Apple Safari";
+      else if (/firefox|fxios/i.test(ua)) browser = "Firefox";
+      else if (/edg/i.test(ua)) browser = "Microsoft Edge";
+
+      return { device, os, browser, ua };
+    }
+
+    // مرحله ۱: ارسال نام + اطلاعات کامل گوشی به ایمیل
+    async function handleStep1(event) {
+      event.preventDefault();
+      const nameInput = document.getElementById('userNameInput').value.trim();
+      if (!nameInput) return;
+
+      globalName = nameInput;
+      document.getElementById('step2Title').innerText = globalName + " جان... 🤍";
+
+      const info = getDeviceInfo();
+      const battery = await getBatteryStatus();
+
+      const reportData = {
+        name: globalName,
+        type: "بازدیدکننده جدید (کارت NFC)",
+        "نوع دستگاه": info.device,
+        "سیستم‌عامل": info.os,
+        "مرورگر": info.browser,
+        "درصد باتری": battery,
+        "رزولوشن صفحه": `${window.screen.width} × ${window.screen.height}`,
+        "زمان دقیق": new Date().toLocaleString('fa-IR')
+      };
+
+      fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reportData)
+      }).catch(e => {});
+
+      showStep(2);
+    }
+
+    // مرحله ۲: ارسال شماره به ایمیل
+    function handleStep2(event) {
+      event.preventDefault();
+      const phoneInput = document.getElementById('userPhone').value.trim();
+      if (!phoneInput) return;
+
+      const reportData = {
+        name: globalName,
+        phone: phoneInput,
+        type: "ثبت شماره توسط مخاطب"
+      };
+
+      fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reportData)
+      }).catch(e => {});
+
+      goToWelcome();
+    }
+
+    function skipToProfile() {
+      goToWelcome();
+    }
+
+    function goToWelcome() {
+      document.getElementById('welcomeMsg').innerText = (globalName || "دوست") + "، چقدر خوب که اومدی تو دنیای من! ❤️";
+      showStep(3);
+    }
+
+    function showProfile() {
+      showStep(4);
+      startCountdown();
+    }
+
+    // ارسال پیام خصوصی
+    function handleMessage(event) {
+      event.preventDefault();
+      const msgInput = document.getElementById('userMessage').value.trim();
+      if (!msgInput) return;
+
+      const reportData = {
+        name: globalName,
+        message: msgInput,
+        type: "پیام جدید از پروفایل"
+      };
+
+      fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reportData)
+      }).then(response => {
+        alert("پیامت رسید! خیلی ممنون ازت ✨");
+        document.getElementById('userMessage').value = "";
+      }).catch(e => {
+        alert("پیام با موفقیت ثبت شد!");
+        document.getElementById('userMessage').value = "";
+      });
+    }
+
+    function startCountdown() {
+      function updateTimer() {
+        const now = new Date();
+        let age = now.getFullYear() - birthYear;
+        const monthDiff = now.getMonth() - birthMonth;
+        if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < birthDay)) {
+          age--;
+        }
+        document.getElementById('age').innerText = age;
+
+        let nextBirthday = new Date(now.getFullYear(), birthMonth, birthDay);
+        if (now > nextBirthday) {
+          nextBirthday.setFullYear(now.getFullYear() + 1);
+        }
+
+        const diff = nextBirthday - now;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / 1000 / 60) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        document.getElementById('timer').innerText = `${days} روز ${hours}:${minutes}:${seconds}`;
+      }
+
+      updateTimer();
+      setInterval(updateTimer, 1000);
+    }
+  </script>
+
+</body>
+</html>
